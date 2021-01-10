@@ -39,10 +39,12 @@ def query_all(endpoint):
     responses = []
     url = API_URL + endpoint
     headers = {'OSDI-API-Token': load_api_key()}
+    print(url)
 
     while True:
         response = requests.get(url, headers=headers)
         status_code = response.status_code
+        print(response)
         if status_code != 200:
             raise requests.HTTPError(response=response)
         res = response.json()
@@ -74,16 +76,6 @@ def get_forms():
                             })
 
     return pd.DataFrame(form_df)
-
-
-def get_local_group(row):
-    sender = row['from']
-
-    if type(sender) == str:
-        for local_group in get_config()['local_groups']:
-            if local_group in sender:
-                return local_group
-    return 'Other'
 
 
 def get_messages():
