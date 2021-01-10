@@ -7,11 +7,6 @@ TODO:
 - AG's that updated but changed reps do not get updated properly - they're seen as two entities.
 """
 
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-from googleapiclient.errors import HttpError
-
 from telethon import TelegramClient
 from telethon.tl.functions.channels import InviteToChannelRequest
 from telethon.tl.types import InputPhoneContact
@@ -182,12 +177,9 @@ async def sync_channels(api_key, links, an_ag_endpoints, spreadsheet_id, google)
             # if not ag in logs["no_telegram"]:
                 # logs["no_telegram"].append(filter_ag(ag))
         except Exception as e:
-            print("Error when adding rep: {}".format(e))
+            print("Error when adding rep {}: {}".format(ag, e))
             # if not ag in logs["error"]:
                 # logs["error"].append((filter_ag(ag), e))
-
-    # Update the google sheet.
-    update_ags_on_sheet(spreadsheet_id, google, ags_formatted)
 
 
 def filter_ag(ag):
@@ -320,114 +312,14 @@ def auth_google_api():
     return build('sheets', 'v4', credentials=creds).spreadsheets()
 
 
-def update_ags_on_sheet(spreadsheet_id, google, ags):
-    """
-        Writes the given AG's to the sheet. First checks if an AG is already
-        on the sheet, if so, updates the data on that row. If not, adds the AG
-        at the first empty row.
-
-        Params:
-        - .... TODO
-    """
-    # Get current sheet.
-    try:
-        current_sheet_data = read_sheet(spreadsheet_id, google)[2:]
-    except HttpError as e:
-        print("Too many requests to read sheet - waiting 100 sec: {}".format(e))
-        sleep(100)
-        return
-
-    fields = ["AG_name", "region", "telegram", "Municipality", "rep_name",
-              "Phone number", "AG_size", "AG_n_arrestables", "AG_regen_phone",
-              "AG_comments"]
-    next_row = len(current_sheet_data) + 1
-    print(current_sheet_data)
-
-    # Prepare each AG for writing.
-    for ag in ags:
-        # Fill in empty fields when there's no value prevent errors.
-        for field in fields:
-            if not field in ag:
-                ag[field] = ""
-        if ag["rep_name"] == "rebel":
-            ag["rep_name"] = ""
-
-        # Format data for request.
-        ag_data = [
-            ag["AG_name"], ag["region"], ag["telegram"], ag["Municipality"], ag["rep_name"],
-            ag["Phone number"], ag["AG_size"], ag["AG_n_arrestables"],
-            ag["AG_regen_phone"], ag["AG_comments"], strftime("%b %d %Y %H:%M:%S", localtime(time()))
-        ]
-
-        # Place new AG's on a new row; update existing AG's on their existing row.
-        ag_already_in_sheet = False
-        for i in range(len(current_sheet_data)):
-            if ag["AG_name"] == current_sheet_data[i][0]:
-                current_sheet_data[i] = ag_data
-                ag_already_in_sheet = True
-                break
-        if not ag_already_in_sheet:
-            current_sheet_data.append(ag_data)
-
-    try:
-        write_to_sheet(spreadsheet_id, google, current_sheet_data)
-    except HttpError as e:
-        print("Too many requests to write to sheet - waiting 100 sec: {}".format(e))
-        sleep(100)
-        return
-
-
-def read_sheet(spreadsheet_id, google, row=0):
-    """
-        Returns the content of the entire sheet. If a row number above 0 is
-        specified, only returns the contents of that row.
-    """
-    if row > 0:
-        return google.values().get(
-            spreadsheetId=spreadsheet_id,
-            range="Synced-Action-Network-data!A{}".format(row),
-        ).execute().get('values', [])
-    return google.values().get(
-        spreadsheetId=spreadsheet_id,
-        range="Synced-Action-Network-data".format(row),
-    ).execute().get('values', [])
-
-
-def write_to_sheet(spreadsheet_id, google, data, row=3):
-    """
-        Writes the given data to the used google spreadsheet.
-
-        Params:
-        - spreadsheet_id (string) : id of the used google spreadsheet.
-        - google (?) : api object used to make api calls.
-        - data (list of lists) : inner lists contains entries which will be
-                                 written to individual cells in the row, starting
-                                 at index 1.
-        - row (int) : number of the row to which to start writing. Defaults at 3.
-
-    """
-    range = "Synced-Action-Network-data!A{}".format(row)
-    body = {
-        "range": range,
-        "majorDimension": "ROWS",
-        "values": data
-    }
-    google.values().update(
-        spreadsheetId=spreadsheet_id,
-        range=range,
-        valueInputOption="RAW",
-        body=body,
-    ).execute()
-
-
-
 async def main():
     """
         Starts the sync loop. The loop repeats every five minutes.
         Sends a log of the progress to the admins each day.
     """
     # Start-up.
-    google = auth_google_api()
+    # google = auth_google_api()
+    google = 0
     await client.start()
     current_day = int(strftime("%j", localtime(time()))) - 1
 
@@ -436,7 +328,7 @@ async def main():
     links = json.loads(os.getenv("links"))
     super_admins = json.loads(os.getenv("super_admins"))
     an_ag_endpoints = json.loads(os.getenv("an_ag_endpoints"))
-    spreadsheet_id = os.getenv("spreadsheet")
+    # spreadsheet_id = os.getenv("spreadsheet")
 
     # Sync the channels.
     while True:
