@@ -90,10 +90,10 @@ def get_ags():
             'AG_n_non_arrestables': '',
             'AG_n_arrestables': ''',
             'Municipality': '',
-            'AG_rep_phone': '',
+            'phone_number': '',         # rep phone number.
             'AG_regen_phone': '',
             'AG_comment': '',
-            'AG_rep_name': ''}
+            'given_name': ''}           # rep name.
     """
     # Hardcoded AN endpoints for AG forms creation/update forms.
     an_ag_endpoints = [
@@ -115,13 +115,13 @@ def get_ags():
         ag = {}
 
         # Format the AG data.
-        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "AG_rep_phone", "AG_regen_phone", "AG_comment"]:
+        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "phone_number", "AG_regen_phone", "AG_comment"]:
             if field not in response["custom_fields"]:
                 response["custom_fields"][field] = ""
             ag[field] = response["custom_fields"][field]
         if "given_name" not in response:
             response["given_name"] = ""
-        ag["AG_rep_name"] = response["given_name"]
+        ag["given_name"] = response["given_name"]
         ags.append(ag)
     return ags
 
