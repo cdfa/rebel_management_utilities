@@ -1,9 +1,10 @@
 import datetime
 
-from local_group_support.config.config import get_config
-from local_group_support.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID, LOCAL_GROUP_INTEGRATORS_CHANNEL_ID
-from rebel_management_utilities.members import get_member_stats
-from local_group_support.utils.nextcloud import get_nextcloud_user, BASE_URL, INTEGRATION_DIRECTORY, \
+from rebel_management_utilities.config.config import get_config
+from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID, \
+    LOCAL_GROUP_INTEGRATORS_CHANNEL_ID
+from rebel_management_utilities.utils.members import get_member_stats
+from rebel_management_utilities.utils.nextcloud import get_nextcloud_user, BASE_URL, INTEGRATION_DIRECTORY, \
     write_to_spreadsheet, CIRCLE_INTEGRATION_DIRECTORY
 
 
