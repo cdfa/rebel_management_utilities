@@ -78,6 +78,16 @@ def get_forms():
     return pd.DataFrame(form_df)
 
 
+def get_local_group(row):
+    sender = row['from']
+
+    if type(sender) == str:
+        for local_group in get_config()['local_groups']:
+            if local_group in sender:
+                return local_group
+    return 'Other'
+
+
 def get_messages():
     messages = query_all(endpoint='messages')
     df = pd.DataFrame(messages)
