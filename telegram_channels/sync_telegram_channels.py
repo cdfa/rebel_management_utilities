@@ -7,7 +7,7 @@ from telethon.errors.rpcerrorlist import FloodWaitError
 from convert_phone import convert_phone_number
 
 from time import sleep
-import json
+import logging
 from dotenv import load_dotenv
 import os
 import os.path
@@ -16,7 +16,7 @@ import os.path
 logs = {"added" : [], "no_telegram" : [], "other_error" : []}
 
 
-async def sync_telegram_channel(people, channel, invitation):
+async def sync_telegram_channel(client, people, channel, invitation):
     """
         Syncs the list of people with the members of the specified telegram
         channels; skips people without a 'phone_number' field.
@@ -26,13 +26,14 @@ async def sync_telegram_channel(people, channel, invitation):
         automatic addition up till 200...).
 
         Params:
+        - client : Telegram client object.
         - people (list) : list of dicts containing contact info. Assumes dicts
                           containg a 'phone_number' and 'given_name' entry.
         - channel (string) : id of the telegram channel/group.
         - invitation (string) : invitation message send to new people.
     """
-    p_in_channel = [p.phone for user in await client.get_participants(channel) if p.phone]
-    p_to_add = []
+    p_in_channel = [p.phone for p in await client.get_participants(channel) if p.phone]
+
     for p in people:
         p["phone_number"] = convert_phone_number(p["phone_number"])
 
@@ -41,17 +42,16 @@ async def sync_telegram_channel(people, channel, invitation):
             try:
                 await client.send_message(p["phone_number"], invitation)
                 if len(p_in_channel) < 200:
-                    await add_user(p, channel)
-                logs["messaged"].append(p)
+                    await add_user(client, p, channel)
+                logging.info("Successfully invited person: {}".format(p))
 
             except IndexError as e: # Person doesn't have Telegram.
-                logs["no_telegram"].append(p)
+                logging.warning("Person has no telegram account: {}".format(p))
+            except Exception as e: # Other errors.
+                logging.warning("Couldn't add person: {}".format(p))
 
-            except Error as e: # Other errors.
-                logs["other_error"].append(p)
 
-
-async def add_user(person, channel):
+async def add_user(client, person, channel):
     """
         Adds the specified user to the specified telegram channel. Assumes
         person has a 'phone_number' field.
@@ -60,14 +60,15 @@ async def add_user(person, channel):
         an exception.
 
         Params:
+        - client : Telegram client object.
         - person (dict) : a dictionary of describing a person.
         - channel (string) : id of the telegram channel/group.
     """
     # Add user to contact. This allows us to add them to the channel
     contact = InputPhoneContact(
         client_id=0,
-        phone=user["phone_number"],
-        first_name=user["given_name"],
+        phone=person["phone_number"],
+        first_name=person["given_name"],
         last_name="xr_automatic_telegram_script"
     )
 
@@ -77,7 +78,7 @@ async def add_user(person, channel):
             result = await client(ImportContactsRequest([contact]))
             break
         except FloodWaitError as e:
-            print("Flood errror - waiting: {}".format(e))
+            print("Flood error - waiting: {}".format(e))
             sleep(60)
 
     # Add them to the correct channel.
