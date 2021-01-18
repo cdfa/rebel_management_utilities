@@ -3,8 +3,8 @@ import datetime
 import pandas as pd
 
 from local_group_support.config.config import get_config
-from rebel_management_utilities.action_network import get_forms, query, query_all
-
+from rebel_management_utilities.action_network import get_forms, query, query_all, update_person
+gi
 FORMATION_DATE = datetime.date(2018, 4, 1)
 
 
@@ -161,3 +161,41 @@ def get_member_stats(start_date):
 
     df = pd.DataFrame(members_processed)
     return df
+
+
+def get_local_group_overview(to_file=False):
+    """
+        Returns two dicts: one mapping local groups to the number of people in them
+        and one mapping municipalities to the number of people in them.
+
+        Only includes municipalities and local groups with at least one sign-up.
+
+        Also saves this data to the 'local_group_sizes.csv' and 'municipality_sizes.csv'
+        files if 'to_file' is set.
+    """
+    municipalities = {}
+    local_groups = {}
+
+    for p in query_all(endpoint='people'):
+
+        local_group = get_local_group(p)
+        try:
+            municipality = p["custom_fields"]["Municipality"]
+        except Exception as e:
+            continue
+        if municipality not in municipalities:
+            municipalities[municipality] = 0
+        if local_group not in local_groups:
+            local_groups[local_group] = 0
+        municipalities[municipality] += 1
+        local_groups[local_group] += 1
+
+    if to_file:
+        with open('local_group_sizes.csv', 'w') as f:
+            for k in local_groups.keys():
+                f.write("%s, %s\n" % (k, local_groups[k]))
+        with open('municipality_sizes.csv', 'w') as f:
+            for k in municipalities.keys():
+                f.write("%s, %s\n" % (k, municipalities[k]))
+
+    return local_groups, municipalities

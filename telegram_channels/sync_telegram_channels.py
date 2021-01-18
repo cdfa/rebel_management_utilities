@@ -13,9 +13,6 @@ import os
 import os.path
 
 
-logs = {"added" : [], "no_telegram" : [], "other_error" : []}
-
-
 async def sync_telegram_channel(client, people, channel, invitation):
     """
         Syncs the list of people with the members of the specified telegram
@@ -92,6 +89,7 @@ def main():
     client.start()
 
     # TODO: sync the required telegram groups/channels.
+
 
 if __name__ == '__main__':
     main()

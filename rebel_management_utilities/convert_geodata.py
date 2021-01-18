@@ -1,7 +1,7 @@
 import json
 from geopy.geocoders import Nominatim, options
-from geopy.distance import geodesic
 from geopy.extra.rate_limiter import RateLimiter
+import pathlib
 
 
 def get_coordinates(data):
@@ -35,7 +35,7 @@ def converter(from_data_type, to_data_type, data):
         - To get the municipality corresponding to the postcode 1098AB, you
           would call: "convert("postcode", "municipality", "1098AB")".
     """
-    with open('geodata.json') as f:
+    with open(pathlib.Path(__file__).parent / 'geodata.json') as f:
         geodata = json.load(f)
 
         data_types_index = {
