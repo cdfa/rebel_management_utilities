@@ -17,8 +17,8 @@ def get_coordinates(data):
         return coordinates
     except AttributeError:
         # invalid postcode if no coordinates are found
-        print(f'Coordinates not found: {postcode}')
-        raise ValueError(postcode)
+        print(f'Coordinates not found: {data}')
+        raise ValueError(data)
 
 
 def converter(from_data_type, to_data_type, data):
