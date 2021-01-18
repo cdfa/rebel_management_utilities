@@ -41,6 +41,7 @@ def query_all(endpoint):
     headers = {'OSDI-API-Token': load_api_key()}
 
     while True:
+        print(f'Querying {url}')
         response = requests.get(url, headers=headers)
         status_code = response.status_code
         if status_code != 200:
@@ -93,3 +94,25 @@ def get_messages():
     df['local_group'] = df.apply(get_local_group, axis=1)
     df['date'] = pd.to_datetime(df['created_date']).dt.date
     return df
+
+
+def update_person(data, endpoint=None, url=None):
+    """
+        Params:
+        - data (dict) : a dict mapping data fields to new values. E.g. if you
+                        want to alter the municipality (which is part of the
+                        custom fields), you should say:
+                            `data = {"custom_fields" : {"municipality" : NEW_VALUE}}`
+        - endpoint (string) : unique identifier for this person. Always has shape:
+                            `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
+    """
+    if url is None:
+        url = API_URL + "/people/" + endpoint
+    headers = {'OSDI-API-Token': load_api_key(), "Content-Type": "application/json"}
+
+    print(f'Querying {url}')
+    response = requests.put(url, data=json.dumps(data), headers=headers)
+    status_code = response.status_code
+    if status_code != 200:
+        raise requests.HTTPError(response=response)
+    return response.json()
