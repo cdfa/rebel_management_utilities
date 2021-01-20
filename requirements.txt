@@ -7,3 +7,6 @@ google-auth-oauthlib
 filecache
 openpyxl
 xlrd
+telethon==1.16.0
+phonenumbers==8.12.9
+python-dotenv==0.10.3
