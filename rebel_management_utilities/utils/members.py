@@ -58,19 +58,11 @@ def get_custom_field(member, field):
 
 
 def get_local_group(member):
-    local_group = get_custom_field(member, 'local_group')
-
-    if local_group == 'Not selected' or local_group == 'No group nearby':
-        local_group = None
-
-    if not local_group:
-        municipality = get_custom_field(member, 'Municipality')
-        config = get_config()
-        for _local_group, local_group_config in config['local_groups'].items():
-            if municipality in local_group_config['municipalities']:
-                local_group = _local_group
-                break
-    return local_group
+    municipality = get_custom_field(member, 'Municipality')
+    config = get_config()
+    for local_group, local_group_config in config['local_groups'].items():
+        if municipality in local_group_config['municipalities']:
+            return local_group
 
 
 def get_email_address(member):
@@ -88,6 +80,50 @@ def get_member_taggings(member):
         tag_names.append(tag['name'])
 
     return tag_names
+
+
+def get_ags():
+    """
+        Returns a list of all AG's. Format of an AG:
+            {'AG_name': '',
+            'AG_size': '',
+            'AG_n_non_arrestables': '',
+            'AG_n_arrestables': ''',
+            'Municipality': '',
+            'phone_number': '',         # rep phone number.
+            'AG_regen_phone': '',
+            'AG_comment': '',
+            'given_name': ''}           # rep name.
+    """
+    # Hardcoded AN endpoints for AG forms creation/update forms.
+    an_ag_endpoints = [
+        "forms/e8ac2f14-ba65-47fc-9560-90bd17f105fc/submissions",
+        "forms/d38377d0-be06-4853-ae82-06d0425e4918/submissions",
+        "forms/dac52069-261e-4485-8124-8e075dc84890/submissions",
+        "forms/8db3db83-38b1-4b9b-8251-6ef672f5cfaa/submissions"
+    ]
+
+    # Get the endpoints to the people who signed the form - they hold the AG info.
+    people_endpoints = []
+    for endpoint in an_ag_endpoints:
+        people_endpoints += [p["_links"]["osdi:person"]["href"] for p in query_all(endpoint)]
+
+    # Request the AG data through these endpoints.
+    ags = []
+    for url in list(set(people_endpoints)): # Remove duplicates (because of update form.)
+        response = query(url=url)
+        ag = {}
+
+        # Format the AG data.
+        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "phone_number", "AG_regen_phone", "AG_comment"]:
+            if field not in response["custom_fields"]:
+                response["custom_fields"][field] = ""
+            ag[field] = response["custom_fields"][field]
+        if "given_name" not in response:
+            response["given_name"] = ""
+        ag["given_name"] = response["given_name"]
+        ags.append(ag)
+    return ags
 
 
 def extract_data(member):
@@ -125,3 +161,41 @@ def get_member_stats(start_date):
 
     df = pd.DataFrame(members_processed)
     return df
+
+
+def get_local_group_overview(to_file=False):
+    """
+        Returns two dicts: one mapping local groups to the number of people in them
+        and one mapping municipalities to the number of people in them.
+
+        Only includes municipalities and local groups with at least one sign-up.
+
+        Also saves this data to the 'local_group_sizes.csv' and 'municipality_sizes.csv'
+        files if 'to_file' is set.
+    """
+    municipalities = {}
+    local_groups = {}
+
+    for p in query_all(endpoint='people'):
+
+        local_group = get_local_group(p)
+        try:
+            municipality = p["custom_fields"]["Municipality"]
+        except Exception as e:
+            continue
+        if municipality not in municipalities:
+            municipalities[municipality] = 0
+        if local_group not in local_groups:
+            local_groups[local_group] = 0
+        municipalities[municipality] += 1
+        local_groups[local_group] += 1
+
+    if to_file:
+        with open('local_group_sizes.csv', 'w') as f:
+            for k in local_groups.keys():
+                f.write("%s, %s\n" % (k, local_groups[k]))
+        with open('municipality_sizes.csv', 'w') as f:
+            for k in municipalities.keys():
+                f.write("%s, %s\n" % (k, municipalities[k]))
+
+    return local_groups, municipalities
