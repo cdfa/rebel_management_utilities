@@ -8,6 +8,7 @@ from rebel_management_utilities.utils.excel import append_df_to_excel
 BASE_URL = 'https://cloud.extinctionrebellion.nl/remote.php/dav/files/'
 INTEGRATION_DIRECTORY = '/CloudXRNL/AppSpecific/Integrators_AN_Home/Integrators_FromLGs/'
 CIRCLE_INTEGRATION_DIRECTORY = '/CloudXRNL/AppSpecific/Integrators_AN_Home/Integrators_FromCircles/'
+AFFINITY_GROUPS_DIRECTORY = '/CloudXRNL/AppSpecific/Integrators_AN_Home/Integrators_AffinityGroups/'
 
 
 def get_nextcloud_user():
