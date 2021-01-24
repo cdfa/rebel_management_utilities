@@ -2,7 +2,7 @@ import datetime
 
 import pandas as pd
 
-from local_group_support.utils.google import export_messages_stats, pull_from_dashboard, export_member_stats
+from rebel_management_utilities.utils.google import export_messages_stats, pull_from_dashboard, export_member_stats
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '1LrSjkBQqZsIzGKs25O7FC9pHFoOEeRuAAs3IL1NEE8g'

@@ -3,10 +3,11 @@ import os
 import requests
 from dotenv import load_dotenv
 
-from local_group_support.utils.excel import append_df_to_excel
+from rebel_management_utilities.utils.excel import append_df_to_excel
 
 BASE_URL = 'https://cloud.extinctionrebellion.nl/remote.php/dav/files/'
 INTEGRATION_DIRECTORY = '/CloudXRNL/AppSpecific/Integrators_AN_Home/Integrators_FromLGs/'
+CIRCLE_INTEGRATION_DIRECTORY = '/CloudXRNL/AppSpecific/Integrators_AN_Home/Integrators_FromCircles/'
 
 
 def get_nextcloud_user():
@@ -30,6 +31,9 @@ def get_nextcloud_password():
 
 
 def write_to_spreadsheet(url, data, deduplicate_column=None):
+    if deduplicate_column:
+        data = data.drop_duplicates(subset=deduplicate_column)
+
     auth = (get_nextcloud_user(), get_nextcloud_password())
     response = requests.get(url, auth=auth)
 

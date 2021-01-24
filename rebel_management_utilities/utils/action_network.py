@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from filecache import filecache
 import json
 
-from local_group_support.config.config import get_config
+from rebel_management_utilities.config.config import get_config
 
 API_URL = 'https://actionnetwork.org/api/v2/'
 

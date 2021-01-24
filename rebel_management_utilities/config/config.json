@@ -2,6 +2,7 @@
   "local_groups": {
     "Alkmaar": {
       "municipalities": [
+        "Alkmaar"
       ]
     },
     "Almere": {
@@ -16,6 +17,7 @@
     },
     "Amstelveen": {
       "municipalities": [
+        "Amstelveen"
       ]
     },
     "Amsterdam": {
@@ -90,7 +92,7 @@
         "Meierijstad",
         "Mill en Sint Hubert",
         "Moerdijk",
-        "Nuenen",
+        "Nuenen, Gerwen en Nederwetten",
         "Oirschot",
         "Oisterwijk",
         "Oosterhout",
@@ -125,7 +127,7 @@
         "Heemskerk",
         "Alkmaar",
         "Heerhugewaard",
-        "Bergen (Noord-Holland)"
+        "Bergen (NH.)"
       ]
     },
     "Delft": {
@@ -177,8 +179,6 @@
         "Harlingen",
         "Leeuwwarden",
         "Dantumadiel",
-        "Dantumadeel",
-        "De Friese Meren",
         "De Fryske Marren",
         "Tietjerksteradeel",
         "Tytsjerksteradiel",
@@ -233,10 +233,9 @@
         "Mook en Middelaar",
         "Maasgouw",
         "Echt-Susteren",
-        "Bergen (Limburg)",
+        "Bergen (L.)",
         "Venray",
         "Horst aan de Maas",
-        "Peel",
         "Peel en Maas",
         "Venlo",
         "Beesel",
@@ -251,7 +250,7 @@
         "Rotterdam",
         "Schiedam",
         "Vlaardingen",
-        "Capelle",
+        "Capelle aan den IJssel",
         "Krimpen"
       ]
     },
@@ -277,6 +276,32 @@
       "municipalities": [
         "Zwolle"
       ]
+    }
+  },
+  "circles": {
+    "Tech": {
+      "tagging": "Interesse in tech cirkel"
+    },
+    "ActionsLogistics": {
+      "tagging": "Interesse in actie cirkel"
+    },
+    "Arts": {
+      "tagging": "Interesse in kunst cirkel"
+    },
+    "PoliticalStrategy": {
+      "tagging": "Interesse in politieke strategie cirkel"
+    },
+    "OutreachTraining": {
+      "tagging": "Interesse in outreach en training cirkel"
+    },
+    "Media": {
+      "tagging": "Interesse in (sociale)media cirkel"
+    },
+    "Integration": {
+      "tagging": "Interesse in integratie"
+    },
+    "Legal": {
+      "tagging": "Interesse in 'legal' cirkel"
     }
   }
 }

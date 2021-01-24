@@ -2,8 +2,8 @@ import datetime
 
 import pandas as pd
 
-from local_group_support.config.config import get_config
-from rebel_management_utilities.action_network import get_forms, query, query_all
+from rebel_management_utilities.config.config import get_config
+from rebel_management_utilities.utils.action_network import get_forms, query, query_all
 
 FORMATION_DATE = datetime.date(2018, 4, 1)
 
