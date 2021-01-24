@@ -122,6 +122,7 @@ def get_ags():
         if "given_name" not in response:
             response["given_name"] = ""
         ag["given_name"] = response["given_name"]
+        ag["created_date"] = pd.to_datetime(response["created_date"]).date()
         ags.append(ag)
     return ags
 

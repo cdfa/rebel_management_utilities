@@ -17,13 +17,13 @@ def push_spreadsheet(df, group, base_directory):
     try:
         url = get_spreadsheet_url(base_directory, group)
         df_formatted = df[
-            ['AG_name', 'AG_size', 'AG_n_arrestables', 'AG_regen_phone', 'Municipality', 'AG_comment']].sort_values(
-            'submission_date')
+            ['AG_name', 'AG_size', 'AG_n_arrestables', 'AG_regen_phone', 'Municipality', 'AG_comment',
+             'created_date']].sort_values('created_date')
 
         df_formatted = df_formatted.rename(columns={'AG_name': 'Naam', 'AG_size': '# rebels',
                                                     'AG_n_arrestables': '# arrestables',
                                                     'AG_regen_phone': 'Telefoon', 'Municipality': 'Gemeente',
-                                                    'AG_comment': 'Commentaar'})
+                                                    'created_date': 'Aangemeld op', 'AG_comment': 'Commentaar'})
 
         write_to_spreadsheet(url, df_formatted, deduplicate_column='E-mail')
         post_to_channel(LOGGING_CHANNEL_ID,
