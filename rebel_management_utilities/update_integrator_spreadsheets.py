@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from rebel_management_utilities.config.config import get_config
 from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID, \
@@ -47,7 +48,11 @@ def post_signups_to_mattermost(df):
 
 
 if __name__ == "__main__":
-    start_date = datetime.date.today() - datetime.timedelta(days=7)
+    lookback_days = 7
+    if os.getenv("INTEGRATOR_SPREADSHEET_LOOKBACK_DAYS"):
+        lookback_days = int(os.getenv("INTEGRATOR_SPREADSHEET_LOOKBACK_DAYS"))
+
+    start_date = datetime.date.today() - datetime.timedelta(days=lookback_days)
     df = get_member_stats(start_date)
     df_filtered = df[(df['sign_up_date'] > start_date) | (df['form_name'].str.contains('Introduction session'))]
 
