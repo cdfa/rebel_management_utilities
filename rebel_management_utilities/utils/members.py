@@ -123,6 +123,7 @@ def get_ags():
             response["given_name"] = ""
         ag["given_name"] = response["given_name"]
         ag["created_date"] = pd.to_datetime(response["created_date"]).date()
+        ag["local_group"] = get_local_group(response)
         ags.append(ag)
     return ags
 
