@@ -25,7 +25,7 @@ def push_spreadsheet(df, group, base_directory):
                                                     'AG_regen_phone': 'Telefoon', 'Municipality': 'Gemeente',
                                                     'created_date': 'Aangemeld op', 'AG_comment': 'Commentaar'})
 
-        write_to_spreadsheet(url, df_formatted, deduplicate_column='E-mail')
+        write_to_spreadsheet(url, df_formatted, deduplicate_column='Naam')
         post_to_channel(LOGGING_CHANNEL_ID,
                         f'Successfully updated affinity groups for {group}')
     except Exception as e:
