@@ -92,7 +92,7 @@ def get_ags():
             'Municipality': '',
             'phone_number': '',         # rep phone number.
             'AG_regen_phone': '',
-            'AG_comment': '',
+            'AG_comments': '',
             'given_name': ''}           # rep name.
     """
     # Hardcoded AN endpoints for AG forms creation/update forms.
@@ -115,7 +115,7 @@ def get_ags():
         ag = {}
 
         # Format the AG data.
-        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "phone_number", "AG_regen_phone", "AG_comment"]:
+        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "phone_number", "AG_regen_phone", "AG_comments"]:
             if field not in response["custom_fields"]:
                 response["custom_fields"][field] = ""
             ag[field] = response["custom_fields"][field]

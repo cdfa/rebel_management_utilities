@@ -18,7 +18,7 @@ def push_spreadsheet(df, group, base_directory):
         url = get_spreadsheet_url(base_directory, group)
         df_formatted = df[
             ['AG_name', 'AG_size', 'AG_n_arrestables', 'given_name', 'email_address',
-             'AG_regen_phone', 'Municipality', 'AG_comment', 'created_date']].sort_values('created_date')
+             'AG_regen_phone', 'Municipality', 'AG_comments', 'created_date']].sort_values('created_date')
 
         df_formatted = df_formatted.rename(columns={'AG_name': 'Naam',
                                                     'AG_size': '# rebels',
@@ -28,7 +28,7 @@ def push_spreadsheet(df, group, base_directory):
                                                     'AG_regen_phone': 'Telefoon representative',
                                                     'Municipality': 'Gemeente',
                                                     'created_date': 'Aangemeld op',
-                                                    'AG_comment': 'Commentaar'})
+                                                    'AG_comments': 'Commentaar'})
 
         write_to_spreadsheet(url, df_formatted, deduplicate_column='Naam')
         post_to_channel(LOGGING_CHANNEL_ID,
