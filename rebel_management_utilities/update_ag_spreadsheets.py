@@ -42,3 +42,5 @@ if __name__ == "__main__":
 
     for local_group, ags_grouped in ags.groupby('local_group'):
         push_spreadsheet(ags_grouped, local_group, AFFINITY_GROUPS_DIRECTORY)
+
+    push_spreadsheet(ags[ags['local_group'].isnull()], 'Other', AFFINITY_GROUPS_DIRECTORY)
