@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 import pandas as pd
 
@@ -154,7 +155,7 @@ def get_member_stats(start_date):
     members_processed = []
 
     for index, m in enumerate(members):
-        print(f'Processing {index} of {len(members)}')
+        logging.info(f'Processing {index} of {len(members)}')
         if pd.to_datetime(m['modified_date']).date() <= start_date:
             continue
         members_processed.extend(extract_data(m))

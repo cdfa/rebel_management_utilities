@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 
 from rebel_management_utilities.config.config import get_config
@@ -31,6 +32,7 @@ def push_spreadsheet(df, group, base_directory):
         post_to_channel(LOGGING_CHANNEL_ID,
                         f'Successfully updated integrator spreadsheet for {group} - {len(df_formatted)} new rebels')
     except Exception as e:
+        logging.warning(f'Failed to update integrator spreadsheet for {group} - {e}')
         post_to_channel(LOGGING_CHANNEL_ID, f'@all Failed to update integrator spreadsheet for {group} - {e}')
 
 

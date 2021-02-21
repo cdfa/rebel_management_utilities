@@ -1,3 +1,4 @@
+import logging
 import os
 
 import pandas as pd
@@ -27,7 +28,7 @@ def query(endpoint=None, url=None):
         url = API_URL + endpoint
     headers = {'OSDI-API-Token': load_api_key()}
 
-    print(f'Querying {url}')
+    logging.info(f'Querying {url}')
     response = requests.get(url, headers=headers)
     status_code = response.status_code
     if status_code != 200:
@@ -42,7 +43,7 @@ def query_all(endpoint):
     headers = {'OSDI-API-Token': load_api_key()}
 
     while True:
-        print(f'Querying {url}')
+        logging.info(f'Querying {url}')
         response = requests.get(url, headers=headers)
         status_code = response.status_code
         if status_code != 200:
@@ -121,7 +122,7 @@ def update_person(data, endpoint=None, url=None):
         url = API_URL + "/people/" + endpoint
     headers = {'OSDI-API-Token': load_api_key(), "Content-Type": "application/json"}
 
-    print(f'Querying {url}')
+    logging.info(f'Querying {url}')
     response = requests.put(url, data=json.dumps(data), headers=headers)
     status_code = response.status_code
     if status_code != 200:

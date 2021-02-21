@@ -75,7 +75,7 @@ async def add_user(client, person, channel):
             result = await client(ImportContactsRequest([contact]))
             break
         except FloodWaitError as e:
-            print("Flood error - waiting: {}".format(e))
+            logging.warning("Flood error - waiting: {}".format(e))
             sleep(60)
 
     # Add them to the correct channel.
