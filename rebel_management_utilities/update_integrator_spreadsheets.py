@@ -1,6 +1,7 @@
 import datetime
 import logging
 import os
+import pathlib
 
 from rebel_management_utilities.config.config import get_config
 from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID, \
@@ -41,7 +42,7 @@ def post_signups_to_mattermost(df, lookback_days):
     total_signups = df_grouped.sum()
     df_grouped = df_grouped.reset_index().rename(columns={'local_group': 'Local group', 0: '#'})
 
-    with open('resources/signups_message.md', 'r') as f:
+    with open(pathlib.Path(__file__).parent / 'resources/signups_message.md', 'r') as f:
         message = f.read()
 
     message = message.format(total_signups=total_signups, signup_table=df_grouped.to_markdown(index=False),
