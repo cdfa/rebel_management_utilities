@@ -4,7 +4,7 @@ from telethon.tl.types import InputPhoneContact
 from telethon.tl.functions.contacts import ImportContactsRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 
-from convert_phone import convert_phone_number
+from .convert_phone import convert_phone_number
 
 from time import sleep
 import logging
