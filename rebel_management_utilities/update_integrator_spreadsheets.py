@@ -36,7 +36,7 @@ def push_spreadsheet(df, group, base_directory):
         post_to_channel(LOGGING_CHANNEL_ID, f'@all Failed to update integrator spreadsheet for {group} - {e}')
 
 
-def post_signups_to_mattermost(df):
+def post_signups_to_mattermost(df, lookback_days):
     df_grouped = df.groupby('local_group').size()
     total_signups = df_grouped.sum()
     df_grouped = df_grouped.reset_index().rename(columns={'local_group': 'Local group', 0: '#'})
@@ -44,7 +44,8 @@ def post_signups_to_mattermost(df):
     with open('resources/signups_message.md', 'r') as f:
         message = f.read()
 
-    message = message.format(total_signups=total_signups, signup_table=df_grouped.to_markdown(index=False))
+    message = message.format(total_signups=total_signups, signup_table=df_grouped.to_markdown(index=False),
+                             lookback_days=lookback_days)
 
     post_to_channel(LOCAL_GROUP_INTEGRATORS_CHANNEL_ID, message)
 
@@ -65,4 +66,4 @@ if __name__ == "__main__":
         df_grouped = df_filtered[df_filtered['taggings'].apply(lambda x: circle_config["tagging"] in x)]
         push_spreadsheet(df_grouped, circle, CIRCLE_INTEGRATION_DIRECTORY)
 
-    post_signups_to_mattermost(df_filtered)
+    post_signups_to_mattermost(df_filtered, lookback_days)
