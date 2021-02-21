@@ -11,3 +11,4 @@ telethon==1.16.0
 phonenumbers==8.12.9
 tabulate
 geopy
+appdirs
