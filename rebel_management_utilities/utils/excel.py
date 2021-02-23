@@ -2,6 +2,12 @@ import pandas as pd
 from openpyxl import load_workbook
 
 
+def write_df_to_excel(filename, df, **to_excel_kwargs):
+    writer = pd.ExcelWriter(filename, engine='openpyxl')
+    df.to_excel(writer, **to_excel_kwargs)
+    writer.save()
+
+
 def append_df_to_excel(filename, df, deduplicate_column=None, skiprows=0, **to_excel_kwargs):
     writer = pd.ExcelWriter(filename, engine='openpyxl')
     writer.book = load_workbook(filename)
