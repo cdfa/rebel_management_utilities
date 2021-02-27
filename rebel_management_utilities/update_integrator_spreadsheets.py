@@ -10,6 +10,8 @@ from rebel_management_utilities.utils.members import get_member_stats
 from rebel_management_utilities.utils.nextcloud import get_nextcloud_user, BASE_URL, INTEGRATION_DIRECTORY, \
     write_to_spreadsheet, CIRCLE_INTEGRATION_DIRECTORY
 
+logging.getLogger().setLevel(logging.INFO)
+
 
 def get_spreadsheet_url(base_directory, group):
     username = get_nextcloud_user()
