@@ -4,7 +4,7 @@ from telethon.tl.types import InputPhoneContact
 from telethon.tl.functions.contacts import ImportContactsRequest
 from telethon.errors.rpcerrorlist import FloodWaitError
 
-from convert_phone import convert_phone_number
+from .convert_phone import convert_phone_number
 
 from time import sleep
 import logging
@@ -75,7 +75,7 @@ async def add_user(client, person, channel):
             result = await client(ImportContactsRequest([contact]))
             break
         except FloodWaitError as e:
-            print("Flood error - waiting: {}".format(e))
+            logging.warning("Flood error - waiting: {}".format(e))
             sleep(60)
 
     # Add them to the correct channel.

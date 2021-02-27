@@ -1,6 +1,7 @@
 import os
 
 import requests
+from appdirs import user_cache_dir
 from dotenv import load_dotenv
 
 from rebel_management_utilities.utils.excel import append_df_to_excel, write_df_to_excel
@@ -37,16 +38,18 @@ def write_to_spreadsheet(url, data, deduplicate_column=None, create=False):
     if deduplicate_column:
         data = data.drop_duplicates(subset=deduplicate_column)
 
+    file_name = user_cache_dir('rebel_management_utilities', 'XR NL') + '/' + 'tmp.xlsx'
+
     if create:
-        write_df_to_excel('tmp.xlsx', data, index=False)
+        write_df_to_excel(file_name, data, index=False)
     else:
         response = requests.get(url, auth=auth)
 
-        with open('tmp.xlsx', 'wb') as f:
+        with open(file_name, 'wb') as f:
             f.write(response.content)
 
-        append_df_to_excel('tmp.xlsx', data, deduplicate_column=deduplicate_column, skiprows=1, header=False, index=False)
+        append_df_to_excel(file_name, data, deduplicate_column=deduplicate_column, skiprows=1, header=False, index=False)
 
-    with open('tmp.xlsx', 'rb') as f:
+    with open(file_name, 'rb') as f:
         data = f.read()
         requests.put(url, data=data, auth=auth)

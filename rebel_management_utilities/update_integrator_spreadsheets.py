@@ -1,5 +1,7 @@
 import datetime
+import logging
 import os
+import pathlib
 
 from rebel_management_utilities.config.config import get_config
 from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID, \
@@ -7,6 +9,8 @@ from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING
 from rebel_management_utilities.utils.members import get_member_stats
 from rebel_management_utilities.utils.nextcloud import get_nextcloud_user, BASE_URL, INTEGRATION_DIRECTORY, \
     write_to_spreadsheet, CIRCLE_INTEGRATION_DIRECTORY
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 def get_spreadsheet_url(base_directory, group):
@@ -31,18 +35,20 @@ def push_spreadsheet(df, group, base_directory):
         post_to_channel(LOGGING_CHANNEL_ID,
                         f'Successfully updated integrator spreadsheet for {group} - {len(df_formatted)} new rebels')
     except Exception as e:
+        logging.warning(f'Failed to update integrator spreadsheet for {group} - {e}')
         post_to_channel(LOGGING_CHANNEL_ID, f'@all Failed to update integrator spreadsheet for {group} - {e}')
 
 
-def post_signups_to_mattermost(df):
+def post_signups_to_mattermost(df, lookback_days):
     df_grouped = df.groupby('local_group').size()
     total_signups = df_grouped.sum()
     df_grouped = df_grouped.reset_index().rename(columns={'local_group': 'Local group', 0: '#'})
 
-    with open('resources/signups_message.md', 'r') as f:
+    with open(pathlib.Path(__file__).parent / 'resources/signups_message.md', 'r') as f:
         message = f.read()
 
-    message = message.format(total_signups=total_signups, signup_table=df_grouped.to_markdown(index=False))
+    message = message.format(total_signups=total_signups, signup_table=df_grouped.to_markdown(index=False),
+                             lookback_days=lookback_days)
 
     post_to_channel(LOCAL_GROUP_INTEGRATORS_CHANNEL_ID, message)
 
@@ -63,4 +69,4 @@ if __name__ == "__main__":
         df_grouped = df_filtered[df_filtered['taggings'].apply(lambda x: circle_config["tagging"] in x)]
         push_spreadsheet(df_grouped, circle, CIRCLE_INTEGRATION_DIRECTORY)
 
-    post_signups_to_mattermost(df_filtered)
+    post_signups_to_mattermost(df_filtered, lookback_days)

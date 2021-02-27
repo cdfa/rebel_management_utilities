@@ -22,5 +22,6 @@ setuptools.setup(
     install_requires=[
         'python-dotenv',
         'requests'
-    ]
+    ],
+    include_package_data=True,
 )

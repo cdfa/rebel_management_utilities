@@ -6,8 +6,9 @@ google-auth-httplib2
 google-auth-oauthlib
 filecache
 openpyxl
-xlrd
+xlrd==1.2.0
 telethon==1.16.0
 phonenumbers==8.12.9
 tabulate
 geopy
+appdirs

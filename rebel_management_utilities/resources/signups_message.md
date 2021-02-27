@@ -1,6 +1,6 @@
 ### Nieuwe rebellen :star2: 
 
-Hallo @all integrators, afgelopen maand zijn {total_signups} nieuwe mensen geïnteresseerd geraakt in XR :tada: Hier is een verdeilng over de lokale groepen:
+Hallo @all integrators, afgelopen {lookback_days} dagen zijn {total_signups} nieuwe mensen geïnteresseerd geraakt in XR :tada: Hier is een verdeilng over de lokale groepen:
 
 {signup_table}
 
