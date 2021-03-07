@@ -1,9 +1,14 @@
+import logging
+
 import pandas as pd
 
 from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID
 from rebel_management_utilities.utils.members import get_ags
 from rebel_management_utilities.utils.nextcloud import AFFINITY_GROUPS_DIRECTORY, get_nextcloud_user, BASE_URL, \
     write_to_spreadsheet
+
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 def get_spreadsheet_url(base_directory, group):
