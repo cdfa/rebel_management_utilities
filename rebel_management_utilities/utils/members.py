@@ -69,7 +69,7 @@ def get_local_group(member):
 def get_email_address(member):
     for email in member['email_addresses']:
         if email['primary']:
-            return email['address']
+            return email.get('address')
 
 
 def get_member_taggings(member):
