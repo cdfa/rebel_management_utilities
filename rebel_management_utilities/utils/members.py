@@ -135,10 +135,13 @@ def get_ags():
         if "AG_on_website" in response:
             ag["AG_on_website"] = response["AG_on_website"]
 
-        # Set the rep's name.
+        # Set the rep's name, e-mail, the local group of the AG, and the creation date.
         if "given_name" not in response:
             response["given_name"] = ""
         ag["given_name"] = response["given_name"]
+         ag["created_date"] = pd.to_datetime(response["created_date"]).date()
+         ag["local_group"] = get_local_group(response)
+         ag["email_address"] = get_email_address(response)
 
         # Set the other fields.
         for field in ["AG_name", "AG_size", "Municipality", "Phone number", "AG_description", "AG_comments", "AG_average_age", "AG_language"]:
