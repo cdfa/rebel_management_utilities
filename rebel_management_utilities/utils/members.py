@@ -88,13 +88,15 @@ def get_ags():
         Returns a list of all AG's. Format of an AG:
             {'AG_name': '',
             'AG_size': '',
-            'AG_n_non_arrestables': '',
-            'AG_n_arrestables': ''',
             'Municipality': '',
-            'phone_number': '',         # rep phone number.
-            'AG_regen_phone': '',
+            'AG_risk': '',              # 'low', 'medium' or 'high'
+            'AG_average_age': '',
+            'AG_language': '',
             'AG_comments': '',
-            'given_name': ''}           # rep name.
+            'Phone number': ''',        # rep phone number.
+            'given_name': '',           # rep name.
+            'AG_on_website': ''         # 'No' or 'Yes'
+            'AG_description' : ''       # Description for on website page.
     """
     # Hardcoded AN endpoints for AG forms creation/update forms.
     an_ag_endpoints = [
@@ -115,17 +117,34 @@ def get_ags():
         response = query(url=url)
         ag = {}
 
-        # Format the AG data.
-        for field in ["AG_name", "AG_size", "AG_n_non_arrestables", "AG_n_arrestables", "Municipality", "phone_number", "AG_regen_phone", "AG_comments"]:
-            if field not in response["custom_fields"]:
-                response["custom_fields"][field] = ""
-            ag[field] = response["custom_fields"][field]
+        # Calculate risk from n_arrestables if it hasn't been filled in.
+        if "AG_risk" not in response["custom_fields"]:
+            n_arr = int(response["custom_fields"]["AG_n_arrestables"])
+            n_non = int(response["custom_fields"]["AG_n_non_arrestables"])
+            if n_arr < (n_arr + n_non) / 3:
+                ag["AG_risk"] = "low"
+            elif n_arr > (2 * (n_arr + n_non) / 3):
+                ag["AG_risk"] = "high"
+            else:
+                ag["AG_risk"] = "medium"
+        else:
+            ag["AG_risk"] = response["custom_fields"]["AG_risk"]
+
+        # Old AG's are by default not on the website. Set "No" for these.
+        ag["AG_on_website"] = "No"
+        if "AG_on_website" in response:
+            ag["AG_on_website"] = response["AG_on_website"]
+
+        # Set the rep's name.
         if "given_name" not in response:
             response["given_name"] = ""
         ag["given_name"] = response["given_name"]
-        ag["created_date"] = pd.to_datetime(response["created_date"]).date()
-        ag["local_group"] = get_local_group(response)
-        ag["email_address"] = get_email_address(response)
+
+        # Set the other fields.
+        for field in ["AG_name", "AG_size", "Municipality", "Phone number", "AG_description", "AG_comments", "AG_average_age", "AG_language"]:
+            if field not in response["custom_fields"]:
+                response["custom_fields"][field] = ""
+            ag[field] = response["custom_fields"][field]
         ags.append(ag)
     return ags
 
