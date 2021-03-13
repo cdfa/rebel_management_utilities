@@ -89,12 +89,14 @@ def get_ags():
             {'AG_name': '',
             'AG_size': '',
             'Municipality': '',
+            'local_group': '',          # LG corresponding to this municipality.
             'AG_risk': '',              # 'low', 'medium' or 'high'
             'AG_average_age': '',
             'AG_language': '',
             'AG_comments': '',
             'Phone number': ''',        # rep phone number.
             'given_name': '',           # rep name.
+            'email_address': '',        # rep e-mail.
             'AG_on_website': ''         # 'No' or 'Yes'
             'AG_description' : ''       # Description for on website page.
     """
@@ -139,9 +141,9 @@ def get_ags():
         if "given_name" not in response:
             response["given_name"] = ""
         ag["given_name"] = response["given_name"]
-         ag["created_date"] = pd.to_datetime(response["created_date"]).date()
-         ag["local_group"] = get_local_group(response)
-         ag["email_address"] = get_email_address(response)
+        ag["created_date"] = pd.to_datetime(response["created_date"]).date()
+        ag["local_group"] = get_local_group(response)
+        ag["email_address"] = get_email_address(response)
 
         # Set the other fields.
         for field in ["AG_name", "AG_size", "Municipality", "Phone number", "AG_description", "AG_comments", "AG_average_age", "AG_language"]:
