@@ -1,9 +1,14 @@
+import logging
+
 import pandas as pd
 
 from rebel_management_utilities.utils.mattermost import post_to_channel, LOGGING_CHANNEL_ID
 from rebel_management_utilities.utils.members import get_ags
 from rebel_management_utilities.utils.nextcloud import AFFINITY_GROUPS_DIRECTORY, get_nextcloud_user, BASE_URL, \
     write_to_spreadsheet
+
+
+logging.getLogger().setLevel(logging.INFO)
 
 
 def get_spreadsheet_url(base_directory, group):
@@ -17,15 +22,18 @@ def push_spreadsheet(df, group, base_directory):
     try:
         url = get_spreadsheet_url(base_directory, group)
         df_formatted = df[
-            ['AG_name', 'AG_size', 'AG_n_arrestables', 'given_name', 'email_address',
-             'AG_regen_phone', 'Municipality', 'AG_comments', 'created_date']].sort_values('created_date')
+            ['AG_name', 'AG_size', 'AG_risk', 'AG_average_age', 'AG_language', 'AG_on_website', 'given_name',
+             'email_address', 'Phone number',  'Municipality', 'created_date', 'AG_comments']].sort_values('created_date')
 
         df_formatted = df_formatted.rename(columns={'AG_name': 'Naam',
                                                     'AG_size': '# rebels',
-                                                    'AG_n_arrestables': '# arrestables',
+                                                    'AG_risk': 'arrestibility',
+                                                    'AG_average_age': 'gemiddelde leeftijd',
+                                                    'AG_language': 'taal',
+                                                    'AG_on_website': 'op website',
                                                     'given_name': 'Naam representative',
                                                     'email_address': 'E-mail representative',
-                                                    'AG_regen_phone': 'Telefoon representative',
+                                                    'Phone number': 'Telefoon representative',
                                                     'Municipality': 'Gemeente',
                                                     'created_date': 'Aangemeld op',
                                                     'AG_comments': 'Commentaar'})

@@ -69,7 +69,7 @@ def get_local_group(member):
 def get_email_address(member):
     for email in member['email_addresses']:
         if email['primary']:
-            return email['address']
+            return email.get('address')
 
 
 def get_member_taggings(member):
@@ -121,8 +121,8 @@ def get_ags():
 
         # Calculate risk from n_arrestables if it hasn't been filled in.
         if "AG_risk" not in response["custom_fields"]:
-            n_arr = int(response["custom_fields"]["AG_n_arrestables"])
-            n_non = int(response["custom_fields"]["AG_n_non_arrestables"])
+            n_arr = int(response["custom_fields"].get("AG_n_arrestables", 0))
+            n_non = int(response["custom_fields"].get("AG_n_non_arrestables", 0))
             if n_arr < (n_arr + n_non) / 3:
                 ag["AG_risk"] = "low"
             elif n_arr > (2 * (n_arr + n_non) / 3):
