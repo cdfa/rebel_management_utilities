@@ -54,9 +54,7 @@ def post_signups_to_mattermost(df, lookback_days):
 
 
 if __name__ == "__main__":
-    lookback_days = 7
-    if os.getenv("INTEGRATOR_SPREADSHEET_LOOKBACK_DAYS"):
-        lookback_days = int(os.getenv("INTEGRATOR_SPREADSHEET_LOOKBACK_DAYS"))
+    lookback_days = get_config()['lookback_days']
 
     start_date = datetime.date.today() - datetime.timedelta(days=lookback_days)
     df = get_member_stats(start_date)

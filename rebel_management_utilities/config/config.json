@@ -1,4 +1,5 @@
 {
+  "lookback_days": 14,
   "local_groups": {
     "Alkmaar": {
       "municipalities": [
