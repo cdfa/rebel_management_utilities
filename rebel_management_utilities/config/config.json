@@ -8,12 +8,14 @@
     },
     "Almere": {
       "municipalities": [
-        "Almere"
+        "Almere",
+        "Zeewolde"
       ]
     },
     "Amersfoort": {
       "municipalities": [
-        "Amersfoort"
+        "Amersfoort",
+        "Soest"
       ]
     },
     "Amstelveen": {
@@ -32,6 +34,7 @@
     "Arnhem-Nijmegen": {
       "municipalities": [
         "Arnhem",
+        "Arnhem/Nijmegen",
         "Berg en Dal",
         "Beuningen",
         "Boxmeer",
@@ -52,7 +55,8 @@
         "Rozendaal",
         "Westervoort",
         "Wijchen",
-        "Zevenaar"
+        "Zevenaar",
+        "Zutphen"
       ]
     },
     "Breda": {
@@ -109,7 +113,10 @@
       "municipalities": [
         "'s-Gravenhage",
         "Den Haag",
-        "Rijswijk"
+        "Leidschendam-Voorburg",
+        "Rijswijk",
+        "Westland",
+        "Zoetermeer"
       ]
     },
     "Deventer": {
@@ -128,6 +135,7 @@
         "Zwijndrecht",
         "Sliedrecht",
         "Papendrecht",
+        "Molenlanden",
         "Hendrik-Ido-Ambacht",
         "Alblasserdam",
         "Hardinxveld-Giessendam"
@@ -173,7 +181,7 @@
         "Schiermonnikoog",
         "Waadhoeke",
         "Harlingen",
-        "Leeuwwarden",
+        "Leeuwarden",
         "Dantumadiel",
         "De Fryske Marren",
         "Tietjerksteradeel",
@@ -201,19 +209,24 @@
         "Stadskanaal",
         "Westerwolde",
         "Oldambt",
-        "Delfzijl"
+        "Delfzijl",
+        "Tynaarlo"
       ]
     },
     "Haarlem": {
       "municipalities": [
+        "Heemstede",
         "Haarlem",
-        "Haarlemmermeer"
+        "Haarlemmermeer",
+        "Velsen"
       ]
     },
     "Leiden": {
       "municipalities": [
+        "Alphen aan den Rijn",
         "Leiden",
         "Leidendorp",
+        "Katwijk",
         "Oegstgeest",
         "Voorschoten"
       ]
@@ -243,11 +256,13 @@
     },
     "Rotterdam": {
       "municipalities": [
+        "Barendrecht",
         "Rotterdam",
         "Schiedam",
         "Vlaardingen",
         "Capelle aan den IJssel",
-        "Krimpen"
+        "Krimpen",
+        "Krimpenerwaard"
       ]
     },
     "Tilburg": {
@@ -268,11 +283,20 @@
     },
     "Utrecht": {
       "municipalities": [
-        "Utrecht"
+        "Baarn",
+        "Culemborg",
+        "De Bilt",
+        "Hilversum",
+        "Nieuwegein",
+        "Houten",
+        "Utrecht",
+        "Utrechtse Heuvelrug",
+        "Zeist"
       ]
     },
     "Wageningen": {
       "municipalities": [
+        "Ede",
         "Wageningen"
       ]
     },
@@ -286,6 +310,7 @@
     },
     "Zwolle": {
       "municipalities": [
+        "Westerveld",
         "Zwolle"
       ]
     }
