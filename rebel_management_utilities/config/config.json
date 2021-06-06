@@ -34,13 +34,17 @@
         "Arnhem",
         "Berg en Dal",
         "Beuningen",
+        "Boxmeer",
+        "Cuijk",
         "Doesburg",
         "Druten",
         "Duiven",
         "Heumen",
+        "Grave",
         "Lingewaard",
         "Montferland",
         "Mook en Middelaar",
+        "Mill en Sint Hubert",
         "Nijmegen",
         "Overbetuwe",
         "Renkum",
@@ -51,68 +55,20 @@
         "Zevenaar"
       ]
     },
-    "Brabant": {
+    "Breda": {
       "municipalities": [
-        "Alphen-Chaam",
         "Altena",
-        "Asten",
-        "Baarle-Nassau",
-        "Bergeijk",
         "Bergen op Zoom",
-        "Bernheze",
-        "Best",
-        "Bladel",
-        "Boekel",
-        "Boxmeer",
-        "Boxtel",
         "Breda",
-        "Cranendonck",
-        "Cuijk",
-        "Deurne",
-        "Dongen",
         "Drimmelen",
-        "Eersel",
-        "Eindhoven",
         "Etten-Leur",
         "Geertruidenberg",
-        "Geldrop-Mierlo",
-        "Gemert-Bakel",
-        "Gilze en Rijen",
-        "Goirle",
-        "Grave",
-        "Haaren",
         "Halderberge",
-        "Heeze-Leende",
-        "Helmond",
-        "'s-Hertogenbosch",
-        "Heusden",
-        "Hilvarenbeek",
-        "Laarbeek",
-        "Landerd",
-        "Loon op Zand",
-        "Meierijstad",
-        "Mill en Sint Hubert",
         "Moerdijk",
-        "Nuenen, Gerwen en Nederwetten",
-        "Oirschot",
-        "Oisterwijk",
         "Oosterhout",
-        "Oss",
-        "Reusel-De Mierden",
         "Roosendaal",
         "Rucphen",
-        "Sint Anthonius",
-        "Sint-Michielsgestel",
-        "Someren",
-        "Son en Breugel",
         "Steenbergen",
-        "Tilburg",
-        "Uden",
-        "Valkenswaard",
-        "Veldhoven",
-        "Vught",
-        "Waalre",
-        "Waalwijk",
         "Woensdrecht",
         "Zundert"
       ]
@@ -134,6 +90,19 @@
     "Delft": {
       "municipalities": [
         "Delft"
+      ]
+    },
+    "Den Bosch": {
+      "municipalities": [
+        "Bernheze",
+        "Boxtel",
+        "'s-Hertogenbosch",
+        "Heusden",
+        "Landerd",
+        "Meierijstad",
+        "Sint-Michielsgestel",
+        "Uden",
+        "Vught"
       ]
     },
     "Den Haag": {
@@ -162,6 +131,32 @@
         "Hendrik-Ido-Ambacht",
         "Alblasserdam",
         "Hardinxveld-Giessendam"
+      ]
+    },
+    "Eindhoven": {
+      "municipalities": [
+        "Asten",
+        "Bergeijk",
+        "Best",
+        "Bladel",
+        "Boekel",
+        "Cranendonck",
+        "Deurne",
+        "Eersel",
+        "Eindhoven",
+        "Geldrop-Mierlo",
+        "Gemert-Bakel",
+        "Heeze-Leende",
+        "Helmond",
+        "Laarbeek",
+        "Nuenen, Gerwen en Nederwetten",
+        "Oirschot",
+        "Sint Anthonius",
+        "Someren",
+        "Son en Breugel",
+        "Valkenswaard",
+        "Veldhoven",
+        "Waalre"
       ]
     },
     "Enschede": {
@@ -253,6 +248,22 @@
         "Vlaardingen",
         "Capelle aan den IJssel",
         "Krimpen"
+      ]
+    },
+    "Tilburg": {
+      "municipalities": [
+        "Alphen-Chaam",
+        "Baarle-Nassau",
+        "Dongen",
+        "Gilze en Rijen",
+        "Goirle",
+        "Haaren",
+        "Hilvarenbeek",
+        "Loon op Zand",
+        "Oisterwijk",
+        "Reusel-De Mierden",
+        "Tilburg",
+        "Waalwijk"
       ]
     },
     "Utrecht": {
