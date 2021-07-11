@@ -55,8 +55,7 @@
         "Rozendaal",
         "Westervoort",
         "Wijchen",
-        "Zevenaar",
-        "Zutphen"
+        "Zevenaar"
       ]
     },
     "Breda": {
@@ -306,6 +305,11 @@
         "Zaanstad",
         "Oost-Zaan",
         "Zaanstreek"
+      ]
+    },
+    "Zutphen": {
+      "municipalities": [
+        "Zutphen"
       ]
     },
     "Zwolle": {
