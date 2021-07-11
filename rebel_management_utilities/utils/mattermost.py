@@ -1,3 +1,4 @@
+import logging
 import os
 
 import requests
@@ -22,4 +23,5 @@ def post_to_channel(channel_id, message):
     data = {"channel_id": channel_id, "message": message}
     headers = {'Authorization': get_mattermost_session_token()}
     response = requests.post(BASE_URL + 'api/v4/posts', headers=headers, json=data)
+    logging.info(message)
     return response
