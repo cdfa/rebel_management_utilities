@@ -14,7 +14,7 @@ def append_df_to_excel(filename, df, deduplicate_column=None, skiprows=0, **to_e
     writer.sheets = {ws.title: ws for ws in writer.book.worksheets}
     sheet_name = writer.book.sheetnames[0]
 
-    df_prev = pd.read_excel(filename, skiprows=skiprows)[df.columns].dropna(how='all')
+    df_prev = pd.read_excel(filename, skiprows=skiprows)[df.columns]
     startrow = len(df_prev) + skiprows + 1
 
     if deduplicate_column:
