@@ -124,7 +124,6 @@
         "Olst-Wijhe",
         "Raalte",
         "Rijssen-Holten",
-        "Lochem",
         "Voorst"
       ]
     },
@@ -309,7 +308,10 @@
     },
     "Zutphen": {
       "municipalities": [
-        "Zutphen"
+        "Zutphen",
+        "Brummen",
+        "Bronckhorst",
+        "Lochem"
       ]
     },
     "Zwolle": {
