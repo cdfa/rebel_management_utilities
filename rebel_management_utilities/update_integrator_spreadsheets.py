@@ -67,4 +67,6 @@ if __name__ == "__main__":
         df_grouped = df_filtered[df_filtered['taggings'].apply(lambda x: circle_config["tagging"] in x)]
         push_spreadsheet(df_grouped, circle, CIRCLE_INTEGRATION_DIRECTORY)
 
+    push_spreadsheet(df_filtered[df_filtered['local_group'].isnull()], 'Other', INTEGRATION_DIRECTORY)
+
     post_signups_to_mattermost(df_filtered, lookback_days)
