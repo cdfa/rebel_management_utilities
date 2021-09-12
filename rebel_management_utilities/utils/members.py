@@ -183,7 +183,7 @@ def get_member_stats(start_date):
 
     for index, m in enumerate(members):
         logging.info(f'Processing {index} of {len(members)}')
-        if pd.to_datetime(m['modified_date']).date() <= start_date:
+        if pd.to_datetime(m['created_date']).date() <= start_date:
             continue
         members_processed.extend(extract_data(m))
 

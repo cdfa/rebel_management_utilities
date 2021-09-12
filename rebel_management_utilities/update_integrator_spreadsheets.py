@@ -1,6 +1,5 @@
 import datetime
 import logging
-import os
 import pathlib
 
 from rebel_management_utilities.config.config import get_config
@@ -58,15 +57,14 @@ if __name__ == "__main__":
 
     start_date = datetime.date.today() - datetime.timedelta(days=lookback_days)
     df = get_member_stats(start_date)
-    df_filtered = df[(df['sign_up_date'] > start_date) | (df['form_name'].str.contains('Introduction session'))]
 
-    for local_group, df_grouped in df_filtered.groupby('local_group'):
+    for local_group, df_grouped in df.groupby('local_group'):
         push_spreadsheet(df_grouped, local_group, INTEGRATION_DIRECTORY)
 
     for circle, circle_config in get_config()['circles'].items():
-        df_grouped = df_filtered[df_filtered['taggings'].apply(lambda x: circle_config["tagging"] in x)]
+        df_grouped = df[df['taggings'].apply(lambda x: circle_config["tagging"] in x)]
         push_spreadsheet(df_grouped, circle, CIRCLE_INTEGRATION_DIRECTORY)
 
-    push_spreadsheet(df_filtered[df_filtered['local_group'].isnull()], 'Other', INTEGRATION_DIRECTORY)
+    push_spreadsheet(df[df['local_group'].isnull()], 'Other', INTEGRATION_DIRECTORY)
 
-    post_signups_to_mattermost(df_filtered, lookback_days)
+    post_signups_to_mattermost(df, lookback_days)
