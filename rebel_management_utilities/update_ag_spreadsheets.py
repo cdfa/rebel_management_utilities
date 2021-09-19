@@ -7,7 +7,6 @@ from rebel_management_utilities.utils.members import get_ags
 from rebel_management_utilities.utils.nextcloud import AFFINITY_GROUPS_DIRECTORY, get_nextcloud_user, BASE_URL, \
     write_to_spreadsheet
 
-
 logging.getLogger().setLevel(logging.INFO)
 
 
@@ -47,6 +46,7 @@ def push_spreadsheet(df, group, base_directory):
 
 if __name__ == "__main__":
     ags = pd.DataFrame(get_ags())
+    ags = ags[ags["AG_name"] != ""]
 
     for local_group, ags_grouped in ags.groupby('local_group'):
         push_spreadsheet(ags_grouped, local_group, AFFINITY_GROUPS_DIRECTORY)
